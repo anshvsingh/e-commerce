@@ -164,6 +164,7 @@ void userMenu(User* user) {
                     printf("3. %s\n", getCategoryName(CAT_BOOKS));
                     printf("4. %s\n", getCategoryName(CAT_WATCHES));
                     printf("5. %s\n", getCategoryName(CAT_FASHION));
+                    printf("6. %s\n", getCategoryName(CAT_HOME_DECOR));
                     printf("Enter category choice: ");
                     
                     int catChoice = getIntInput();
@@ -175,6 +176,7 @@ void userMenu(User* user) {
                         case 3: selectedCat = CAT_BOOKS; break;
                         case 4: selectedCat = CAT_WATCHES; break;
                         case 5: selectedCat = CAT_FASHION; break;
+                        case 6: selectedCat = CAT_HOME_DECOR; break;
                         default:
                             printf("Invalid category.\n");
                             pressEnterToContinue();
