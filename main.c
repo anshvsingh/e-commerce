@@ -47,22 +47,41 @@ void getStringInput(char* buffer, int size) {
 
 
 void initializeData() {    
-    g_productRoot = insertProduct(g_productRoot, createProduct(101, "Laptop", 1200.00, 10, CAT_ELECTRONICS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(102, "Mouse", 45.50, 50, CAT_ELECTRONICS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(201, "Keyboard", 150.00, 25, CAT_ELECTRONICS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(51,  "USB Hub", 22.00, 100, CAT_ELECTRONICS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(301, "Monitor", 300.00, 15, CAT_ELECTRONICS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(101, "Laptop", 120000.00, 10, CAT_ELECTRONICS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(102, "Mouse", 450.50, 50, CAT_ELECTRONICS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(103, "Keyboard", 1500.00, 25, CAT_ELECTRONICS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(104,  "USB Hub", 220.00, 100, CAT_ELECTRONICS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(105, "Monitor", 30000.00, 15, CAT_ELECTRONICS));
 
-    g_productRoot = insertProduct(g_productRoot, createProduct(400,"CRICKET BATS",30.00,50,CAT_SPORTS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(401, "Football", 25.00, 30, CAT_SPORTS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(402, "Basketball", 30.00, 20, CAT_SPORTS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(501, "C Programming", 55.00, 40, CAT_BOOKS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(502, "Data Structures", 65.00, 30, CAT_BOOKS));
-    g_productRoot = insertProduct(g_productRoot, createProduct(601, "Analog Watch", 180.00, 25, CAT_WATCHES));
-    g_productRoot = insertProduct(g_productRoot, createProduct(602, "Smart Watch", 250.00, 15, CAT_WATCHES));
-    g_productRoot = insertProduct(g_productRoot, createProduct(701, "Mountain Bike", 450.00, 5, CAT_BIKES));
-    g_productRoot = insertProduct(g_productRoot, createProduct(702, "Road Bike", 550.00, 3, CAT_BIKES));
+    g_productRoot = insertProduct(g_productRoot, createProduct(200,"CRICKET BATS",30000.00,50,CAT_SPORTS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(201, "Football", 250.00, 30, CAT_SPORTS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(202, "Basketball", 3000.00, 20, CAT_SPORTS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(203, "SQUASH BALL",200.00,30,CAT_SPORTS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(204, "BADMINTON RACQUETS",2000.00,50,CAT_SPORTS));
 
+    g_productRoot = insertProduct(g_productRoot, createProduct(501, "C Programming", 555.00, 40, CAT_BOOKS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(502, "Data Structures", 650.00, 30, CAT_BOOKS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(503, "5 WAYS",5000.00,50,CAT_BOOKS));
+    g_productRoot = insertProduct(g_productRoot, createProduct(504, "HISTORY OF RCB",50.00,90,CAT_BOOKS));
+    g_productRoot= insertProduct(g_productRoot,createProduct(505,"HAKAI",500.50,90,CAT_BOOKS));
+
+    g_productRoot = insertProduct(g_productRoot, createProduct(601, "TITAN", 180.00, 25, CAT_WATCHES));
+    g_productRoot = insertProduct(g_productRoot, createProduct(602, "OLEVS", 250.00, 15, CAT_WATCHES));
+    g_productRoot = insertProduct(g_productRoot,createProduct(603,"G-SHOCK",5000000.00,60,CAT_WATCHES));
+    g_productRoot= insertProduct(g_productRoot,createProduct(604,"ROLEX",60000,90,CAT_WATCHES));
+    g_productRoot=insertProduct(g_productRoot,createProduct(605,"OMEGA",8000,60,CAT_WATCHES));
+
+    g_productRoot = insertProduct(g_productRoot, createProduct(701, "CALVIN KLEIN-JEANS", 450.00, 5, CAT_FASHION));
+    g_productRoot = insertProduct(g_productRoot, createProduct(702, "KILLER-TSHIRT", 550.00, 3, CAT_FASHION));
+    g_productRoot = insertProduct(g_productRoot,createProduct(703,"LOUIS PHILLIPE-FORMALS",1000.00,6, CAT_FASHION));
+    g_productRoot = insertProduct(g_productRoot,createProduct(704,"PUMA-SPORTS WEAR",1000.00,60,CAT_FASHION));
+    g_productRoot = insertProduct(g_productRoot,createProduct(705,"COLUMBIA-WINTER WEAR",1000.00,60,CAT_FASHION));
+
+    g_productRoot=insertProduct(g_productRoot,createProduct(801,"LAMP",500,50,CAT_HOME_DECOR));
+    g_productRoot=insertProduct(g_productRoot,createProduct(802,"CHANDELIER",200.00,90,CAT_HOME_DECOR));
+    g_productRoot=insertProduct(g_productRoot,createProduct(803,"VASE",300.00,20,CAT_HOME_DECOR));
+    g_productRoot=insertProduct(g_productRoot,createProduct(804,"WALL STICKERS",100.00,50,CAT_HOME_DECOR));
+    g_productRoot=insertProduct(g_productRoot,createProduct(805,"PHOTO FRAMES",30.00,60,CAT_HOME_DECOR));
 
 
     addUser(&g_userListHead, createUser(1, "user_alice", "alice_pass")); 
@@ -144,7 +163,7 @@ void userMenu(User* user) {
                     printf("2. %s\n", getCategoryName(CAT_SPORTS));
                     printf("3. %s\n", getCategoryName(CAT_BOOKS));
                     printf("4. %s\n", getCategoryName(CAT_WATCHES));
-                    printf("5. %s\n", getCategoryName(CAT_BIKES));
+                    printf("5. %s\n", getCategoryName(CAT_FASHION));
                     printf("Enter category choice: ");
                     
                     int catChoice = getIntInput();
@@ -155,7 +174,7 @@ void userMenu(User* user) {
                         case 2: selectedCat = CAT_SPORTS; break;
                         case 3: selectedCat = CAT_BOOKS; break;
                         case 4: selectedCat = CAT_WATCHES; break;
-                        case 5: selectedCat = CAT_BIKES; break;
+                        case 5: selectedCat = CAT_FASHION; break;
                         default:
                             printf("Invalid category.\n");
                             pressEnterToContinue();

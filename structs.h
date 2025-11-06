@@ -11,7 +11,8 @@ typedef enum Category {
     CAT_SPORTS,
     CAT_BOOKS,
     CAT_WATCHES,
-    CAT_BIKES
+    CAT_FASHION,
+    CAT_HOME_DECOR
 } Category;
 
 //  Product & BST (Tree) 

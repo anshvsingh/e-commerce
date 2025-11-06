@@ -10,8 +10,8 @@ const char* getCategoryName(Category cat) {
         case CAT_SPORTS:      return "Sports";
         case CAT_BOOKS:       return "Books";
         case CAT_WATCHES:     return "Watches";
-        case CAT_BIKES:       return "Bikes";
-        default:              return "Unknown";
+        case CAT_FASHION:       return "Fashion";
+        case CAT_HOME_DECOR:     return "Home_Decor";
     }
 }
 
@@ -60,7 +60,7 @@ void displayProducts(BSTNode* root) {
     if (root != NULL) {
         displayProducts(root->left);
    
-        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %-3d | Category: %s\n",
+        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %-3d | Category: %s\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock,
                getCategoryName(root->product->category)); 
@@ -80,7 +80,7 @@ int displayProductsByCategory(BSTNode* root, Category cat) {
     int countCurrent = 0;
 
     if (root->product->category == cat) {
-        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %d\n",
+        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %d\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock);
         countCurrent = 1;
@@ -103,7 +103,7 @@ int displaySuggestions(BSTNode* root, Category cat, int currentProdId) {
     int countCurrent = 0;
 
     if (root->product->category == cat && root->product->id != currentProdId) {
-        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %d\n",
+        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %d\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock);
         countCurrent = 1;
