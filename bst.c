@@ -1,33 +1,47 @@
 #include "bst.h"
-#include <string.h> 
-#include <stdlib.h> 
-#include <stdio.h>  
+#include <string.h> // for strncpy
+#include <stdlib.h> // for malloc
+#include <stdio.h>  // for printf
 
-
+// UPDATED: Helper function to get a string name for a category
 const char* getCategoryName(Category cat) {
     switch (cat) {
-        case CAT_ELECTRONICS: return "Electronics";
-        case CAT_SPORTS:      return "Sports";
-        case CAT_BOOKS:       return "Books";
-        case CAT_WATCHES:     return "Watches";
-        case CAT_FASHION:       return "Fashion";
-        case CAT_HOME_DECOR:     return "Home_Decor";
+        case CAT_MOBILES:   return "Mobiles";
+        case CAT_LAPTOPS:   return "Laptops";
+        case CAT_WATCHES:   return "Watches";
+        case CAT_PENS:      return "Pens";
+        case CAT_CLOTHES:   return "Clothes";
+        case CAT_EARPHONES: return "Earphones";
+        default:            return "Unknown";
     }
 }
 
+// NEW: Helper for range (mostly for debugging, not shown to user)
+const char* getRangeName(PriceRange range) {
+    switch(range) {
+        case RANGE_HIGH: return "High End";
+        case RANGE_MID:  return "Mid Range";
+        case RANGE_LOW:  return "Low Range";
+        default:         return "Unknown";
+    }
+}
 
-Product* createProduct(int id, const char* name, double price, int stock, Category category) {
+// Creates a new Product - UPDATED
+Product* createProduct(int id, const char* name, double price, int stock, Category category, PriceRange range) {
     Product* p = (Product*)malloc(sizeof(Product));
     p->id = id;
     strncpy(p->name, name, 99);
     p->name[99] = '\0';
     p->price = price;
     p->stock = stock;
-    p->category = category; 
+    p->category = category;
+    p->range = range; // <-- SETS THE HIDDEN RANGE
     return p;
 }
 
+// Inserts a new product into the BST
 BSTNode* insertProduct(BSTNode* node, Product* product) {
+    // ... (This function is unchanged) ...
     if (node == NULL) {
         BSTNode* newNode = (BSTNode*)malloc(sizeof(BSTNode));
         newNode->product = product;
@@ -44,8 +58,9 @@ BSTNode* insertProduct(BSTNode* node, Product* product) {
     return node;
 }
 
-
+// Finds a product in the BST by ID
 BSTNode* findProduct(BSTNode* root, int id) {
+    // ... (This function is unchanged) ...
     if (root == NULL || root->product->id == id) {
         return root;
     }
@@ -55,12 +70,12 @@ BSTNode* findProduct(BSTNode* root, int id) {
     return findProduct(root->right, id);
 }
 
-
+// Displays all products (in-order traversal) - UPDATED
 void displayProducts(BSTNode* root) {
     if (root != NULL) {
         displayProducts(root->left);
-   
-        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %-3d | Category: %s\n",
+        // Only shows category, NOT range
+        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %-3d | Category: %s\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock,
                getCategoryName(root->product->category)); 
@@ -68,47 +83,47 @@ void displayProducts(BSTNode* root) {
     }
 }
 
+// Displays products by category (in-order traversal)
 int displayProductsByCategory(BSTNode* root, Category cat) {
+    // ... (This function is unchanged, it shows all ranges) ...
     if (root == NULL) {
-        return 0;
+        return 0; // No products found in this branch
     }
-
-
     int countLeft = displayProductsByCategory(root->left, cat);
     int countRight = displayProductsByCategory(root->right, cat);
-
     int countCurrent = 0;
-
     if (root->product->category == cat) {
-        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %d\n",
+        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %d\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock);
         countCurrent = 1;
     }
-
-  
     return countLeft + countRight + countCurrent;
 }
 
-
-int displaySuggestions(BSTNode* root, Category cat, int currentProdId) {
+// UPDATED: Displays suggestions (same category AND range, different item)
+int displaySuggestions(BSTNode* root, Category cat, PriceRange range, int currentProdId) {
     if (root == NULL) {
-        return 0; 
+        return 0; // No suggestions in this branch
     }
 
-   
-    int countLeft = displaySuggestions(root->left, cat, currentProdId);
-    int countRight = displaySuggestions(root->right, cat, currentProdId);
+    // Recursively search
+    int countLeft = displaySuggestions(root->left, cat, range, currentProdId);
+    int countRight = displaySuggestions(root->right, cat, range, currentProdId);
 
     int countCurrent = 0;
-
-    if (root->product->category == cat && root->product->id != currentProdId) {
-        printf("  ID: %-3d | Name: %-20s | Price: ₹%.2f | Stock: %d\n",
+    
+    // UPDATED: Now checks category, range, and ID
+    if (root->product->category == cat && 
+        root->product->range == range && 
+        root->product->id != currentProdId) {
+        
+        printf("  ID: %-3d | Name: %-20s | Price: $%.2f | Stock: %d\n",
                root->product->id, root->product->name,
                root->product->price, root->product->stock);
         countCurrent = 1;
     }
     
-  
+    // Return total suggestions found
     return countLeft + countRight + countCurrent;
 }
