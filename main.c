@@ -261,7 +261,7 @@ void userMenu(User* user) {
                 displayHistory(user);
                 pressEnterToContinue();
                 break;
-            case 5: // --- CHECKOUT (SIMPLIFIED) ---
+            case 5: // --- CHECKOUT ---
                 {
                     if (user->cartHead == NULL) {
                         printf("Your cart is empty. Nothing to check out.\n");
@@ -273,6 +273,34 @@ void userMenu(User* user) {
                         int confirm = getIntInput();
 
                         if (confirm == 1) {
+                            
+                         
+                            int stockIsSufficient = 1;
+                            CartItem* current = user->cartHead;
+                            while (current != NULL) {
+                                
+                                if (current->product->stock < current->quantity) {
+                                    printf("\nError: '%s' stock is too low! (Only %d left).\n", 
+                                           current->product->name, current->product->stock);
+                                    printf("Please remove or update the item in your cart.\n");
+                                    stockIsSufficient = 0;
+                                    break;
+                                }
+                                current = current->next;
+                            }
+
+                            if (!stockIsSufficient) {
+                                pressEnterToContinue();
+                                break; 
+                            }
+                            current = user->cartHead; 
+                            while (current != NULL) {
+                                
+                                current->product->stock -= current->quantity;
+                                current = current->next;
+                            }
+
+                           
                             Order* newOrder = (Order*)malloc(sizeof(Order));
                             newOrder->userId = user->id;
                             newOrder->itemsHead = copyCart(user->cartHead); 
@@ -281,20 +309,20 @@ void userMenu(User* user) {
                             newOrder->deliveryAddress[199] = '\0';
                             
                             double total = 0;
-                            CartItem* current = newOrder->itemsHead;
-                            while (current) {
-                                total += current->product->price * current->quantity;
-                                current = current->next;
+                            CartItem* currentTotal = newOrder->itemsHead;
+                            while (currentTotal) {
+                                total += currentTotal->product->price * currentTotal->quantity;
+                                currentTotal = currentTotal->next;
                             }
                             newOrder->totalValue = total;
 
                             enqueue(g_orderQueue, newOrder);
                             user->cartHead = clearCart(user->cartHead);
                             
-                            printf("\nCheckout successful! Your items will be delivered soon.\n");
+                            printf("\nCheckout successful! Stock updated. Your items will be delivered soon.\n");
+
                         } else {
                             printf("Checkout cancelled.\n");
-
                         }
                     }
                     pressEnterToContinue();
