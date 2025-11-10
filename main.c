@@ -1,8 +1,5 @@
-#include "structs.h"
-#include "bst.h"
-#include "linked_list.h"
-#include "stack.h"
-#include "queue.h"
+#include "ecommerce.h"
+
 
 // --- Global Data Definitions ---
 BSTNode* g_productRoot = NULL;
